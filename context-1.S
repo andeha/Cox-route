@@ -1,4 +1,4 @@
-/*  context-1.S | setcontext and getcontext replacements originally from libtask. */
+/*  context-1.S | set and get context replacements originally from libtask. */
 
 #define START(name)
 #define END(name)
@@ -62,47 +62,47 @@ _getmcontext:
     .globl _getmcontext
     START(_getmcontext)
 _getmcontext:
-    str    r1, [r0,#4]
-    str    r2, [r0,#8]
-    str    r3, [r0,#12]
-    str    r4, [r0,#16]
-    str    r5, [r0,#20]
-    str    r6, [r0,#24]
-    str    r7, [r0,#28]
-    str    r8, [r0,#32]
-    str    r9, [r0,#36]
-    str   r10, [r0,#40]
-    str   r11, [r0,#44]
-    str   r12, [r0,#48]
-    str   r13, [r0,#52]
-    str   r14, [r0,#56]
+    str    x1, [x0,#8]
+    str    x2, [x0,#16]
+    str    x3, [x0,#24]
+    str    x4, [x0,#32]
+    str    x5, [x0,#40]
+    str    x6, [x0,#48]
+    str    x7, [x0,#56]
+    str    x8, [x0,#64]
+    str    x9, [x0,#72]
+    str   x10, [x0,#80]
+    str   x11, [x0,#88]
+    str   x12, [x0,#96]
+    str   x13, [x0,#104]
+    str   x14, [x0,#112]
     /* store 1 as r0-to-restore */
-    mov    r1, #1
-    str    r1, [r0]
+    mov    x1, #1
+    str    x1, [x0]
     /* return 0 */
-    mov    r0, #0
-    mov    pc, lr
+    mov    x0, #0
+    br lr /* mov    pc, lr */ /* x30 equal to lr. */
     END(_getmcontext)
      
     .globl _setmcontext
     START(_setmcontext)
 _setmcontext:
-    ldr    r1,  [r0,#4]
-    ldr    r2,  [r0,#8]
-    ldr    r3,  [r0,#12]
-    ldr    r4,  [r0,#16]
-    ldr    r5,  [r0,#20]
-    ldr    r6,  [r0,#24]
-    ldr    r7,  [r0,#28]
-    ldr    r8,  [r0,#32]
-    ldr    r9,  [r0,#36]
-    ldr    r10, [r0,#40]
-    ldr    r11, [r0,#44]
-    ldr    r12, [r0,#48]
-    ldr    r13, [r0,#52]
-    ldr    r14, [r0,#56]
-    ldr    r0,  [r0]
-    mov    pc,  lr
+    ldr    x1,  [x0,#8]
+    ldr    x2,  [x0,#16]
+    ldr    x3,  [x0,#24]
+    ldr    x4,  [x0,#32]
+    ldr    x5,  [x0,#40]
+    ldr    x6,  [x0,#48]
+    ldr    x7,  [x0,#56]
+    ldr    x8,  [x0,#64]
+    ldr    x9,  [x0,#72]
+    ldr    x10, [x0,#80]
+    ldr    x11, [x0,#88]
+    ldr    x12, [x0,#96]
+    ldr    x13, [x0,#104]
+    ldr    x14, [x0,#112]
+    ldr    x0,  [x0]
+    br lr /* mov    pc,  lr */ /* x30 is equal to lr. */
     END(_setmcontext)
     
 #elif defined __mips__
@@ -170,5 +170,7 @@ _setmcontext:
     END(_setmcontext)
     
 #endif
+
+
 
 
