@@ -1,4 +1,4 @@
-/*  snapshot.h | Intel, Arm and Mips machine-states replacements from the libtask library. */
+/*  snapshot.h | Intel, Arm64 and Mips replacement machine-states from the libtask library. */
 
 #include <signal.h>
 
@@ -50,7 +50,7 @@ struct ucontext {
 
 #elif defined __mips__
 
-struct	mcontext {
+struct mcontext {
     /*
      * These fields must match the corresponding fields in struct 
      * sigcontext which follow 'sc_mask'. That way we can support
@@ -87,6 +87,18 @@ struct ucontext {
 };
 
 #elif defined __armv8a__
+
+struct mcontext {
+    long mc_r1, mc_r2, mc_r3, mc_r4, mc_r5, mc_r6, mc_r7, mc_r8, 
+     mc_r9, mc_r10, mc_r11, mc_r12, mc_r13, mc_r14, mc_r0;
+};
+
+struct ucontext {
+    sigset_t uc_sigmask;
+    mcontext_t uc_mcontext;
+    struct __ucontext * uc_link;
+    stack_t uc_stack;
+};
 
 #endif
 
