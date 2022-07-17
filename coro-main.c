@@ -67,7 +67,7 @@ void coro_free(coro_t * coro)
    free(coro);
 }
 
-/* compile with xcrun clang -o coroutines -g context-1.S context-2.c main.c. */
+/* clang -o coroutines -g context-1.S context-2.c -DINCLUDE_MAIN coro-main.c. */
 
 int corout₋helloworld(coro_t * coro)
 {
@@ -77,6 +77,7 @@ int corout₋helloworld(coro_t * coro)
    return 2;
 }
 
+#if defined INCLUDE_MAIN
 int
 main(
   int argc, 
@@ -91,4 +92,6 @@ main(
    puts("done");
    return 0;
 }
+#endif
+
 
