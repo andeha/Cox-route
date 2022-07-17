@@ -43,7 +43,7 @@ struct ucontext {
    sigset_t uc_sigmask;
    struct mcontext uc_mcontext;
    
-   struct __ucontext * uc_link;
+   struct ucontext * uc_link;
    stack_t uc_stack;
    int __spare__[8];
 };
@@ -80,7 +80,7 @@ struct ucontext {
     sigset_t uc_sigmask;
     mcontext_t uc_mcontext;
     
-    struct __ucontext * uc_link;
+    struct ucontext * uc_link;
     stack_t uc_stack;
     int uc_flags;
     int __spare__[4];
@@ -96,7 +96,7 @@ struct mcontext {
 struct ucontext {
     sigset_t uc_sigmask;
     mcontext_t uc_mcontext;
-    struct __ucontext * uc_link;
+    struct ucontext * uc_link;
     stack_t uc_stack;
 };
 
@@ -108,4 +108,5 @@ int swapcontext(struct ucontext *, const struct ucontext *);
 void makecontext(struct ucontext *, void(*)(), int, ...);
 int getmcontext(struct mcontext *);
 void setmcontext(const struct mcontext *);
+
 
