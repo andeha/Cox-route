@@ -2,9 +2,9 @@
 
 #include "snapshot.h"
 
-void * memset(void *b, int c, size_t len);
-
 #if defined __x86_64__
+
+void * memset(void *b, int c, size_t len);
 
 void makecontext(struct ucontext *ucp, void (*func)(void), int argc, ...)
 {
@@ -26,7 +26,7 @@ void makecontext(struct ucontext *ucp, void (*func)(void), int argc, ...)
 
 #elif defined __mips__
 
-void makecontext(ucontext_t *uc, void (*fn)(void), int argc, ...)
+void makecontext(struct ucontext *uc, void (*fn)(void), int argc, ...)
 {
    int i, *sp;
    __builtin_va_list arg;
