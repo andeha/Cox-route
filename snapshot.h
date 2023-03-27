@@ -1,8 +1,8 @@
 /*  snapshot.h | Intel, Arm64 and Mips replacement machine-states from the libtask library. */
 
-#include <signal.h>
-
 #if defined __x86_64__
+
+#include <signal.h>
 
 struct mcontext {
   /*
@@ -68,6 +68,13 @@ struct mcontext {
     int	__spare__[8]; /* XXX reserved */
 };
 
+struct __sigaltstack { 
+    void     *ss_sp;         /* signal stack base */
+    long     ss_size;        /* signal stack length */
+    int      ss_flags;       /* SA_DISABLE and/or SA_ONSTACK */
+};
+typedef struct __sigaltstack stack_t;
+
 struct ucontext {
     /*
      * Keep the order of the first two fields. Also,
@@ -77,8 +84,8 @@ struct ucontext {
      * support them both at the same time.
      * note: the union is not defined, though.
      */
-    sigset_t uc_sigmask;
-    mcontext_t uc_mcontext;
+    long uc_sigmask;
+    struct mcontext uc_mcontext;
     
     struct ucontext * uc_link;
     stack_t uc_stack;
@@ -87,6 +94,8 @@ struct ucontext {
 };
 
 #elif defined __armv8a__
+
+#include <signal.h>
 
 struct mcontext {
     long mc_r1, mc_r2, mc_r3, mc_r4, mc_r5, mc_r6, mc_r7, mc_r8, 
@@ -108,5 +117,4 @@ int swapcontext(struct ucontext *, const struct ucontext *);
 void makecontext(struct ucontext *, void(*)(), int, ...);
 int getmcontext(struct mcontext *);
 void setmcontext(const struct mcontext *);
-
 
