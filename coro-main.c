@@ -4,9 +4,11 @@
 #define true (! false)
 
 #include "snapshot.h"
+#if defined INCLUDE_MAIN
 #include <stdlib.h>
 #include <assert.h>
 #include <stdio.h>
+#endif
 
 typedef struct __coro_t coro_t;
 typedef int (*coro_function_t)(coro_t * coro);
@@ -44,7 +46,9 @@ coro_t * coro_await(coro_function_t function)
    if (sigemptyset(&coro->overlay_context.uc_sigmask) < 0) { }
    makecontext(&coro->overlay_context, (void (*)())__coroutine_entry_point, 1, coro);
    swapcontext(&coro->base_context,&coro->overlay_context);
+#if defined INCLUDE_MAIN
    puts("back-to-main");
+#endif
    return coro;
 }
 
@@ -69,6 +73,8 @@ void coro_free(coro_t * coro)
 
 /* clang -o coroutines -g context-1.S context-2.c -DINCLUDE_MAIN coro-main.c. */
 
+#if defined INCLUDE_MAIN
+
 int corout₋helloworld(coro_t * coro)
 {
    puts("Hello - part 1");
@@ -77,7 +83,6 @@ int corout₋helloworld(coro_t * coro)
    return 2;
 }
 
-#if defined INCLUDE_MAIN
 int
 main(
   int argc, 
@@ -93,5 +98,4 @@ main(
    return 0;
 }
 #endif
-
 
