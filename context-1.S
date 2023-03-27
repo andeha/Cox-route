@@ -155,7 +155,7 @@ _setmcontext:
      *  we would loose the outer return address.
      *  Use a temporary register, then.
      */
-    lw  $8, 132($4).    /* ra */
+    lw  $8, 132($4)     /* ra */
     
     /*  bug: not setting the pc causes a bus error */
     lw  $25, 132($4)    /* pc */
@@ -170,7 +170,5 @@ _setmcontext:
     END(_setmcontext)
     
 #endif
-
-
 
 
