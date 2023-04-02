@@ -4,7 +4,7 @@
 #define true (! false)
 
 #include "snapshot.h"
-#if defined INCLUDE_MAIN
+#if defined(__APPLE__) && defined(__MACH__)
 #include <stdlib.h>
 #include <assert.h>
 #include <stdio.h>
